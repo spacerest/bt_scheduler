@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html lang = "en">
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">  
+  <title>{% block title %}Bricktop Combatives{% endblock %}</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+{% block skripts %}
+<script type="text/javascript">
+
+$(function () {
+    $(".fadein").animate({ opacity : "1.0" });
+});
+</script>
+{% endblock %}
+
+
+</head>
+
+<body class={% block bodytype %}{% endblock %}>
+<header>
+  <div class={% block headerwrap1 %}"back-page"{% endblock %}> 
+    <div class={% block headerwrap2 %}"header-wrap"{% endblock %}>
+      <div class="fadein title-nav" style="opacity: 0" >
+        <a href="/"><h1><span class="top-title">Bricktop</span></br>Combatives</h1></a>
+      <nav>
+	<ul class="links">
+	  <li><a href="/schedule/">schedule</a></li>
+	  <li><a href="/contact/">contact</a></li>
+	</ul> 
+      </nav>
+      </div>
+    </div>
+    </div>
+  </div>
+</header>
+<div class="logo-filter"></div>
+<div class="logo"><img class="fadein" style="opacity:0;"src='/static/assets/images/crown1.png'/></div>
+<div class="main-border">
+  {% block content %}{% endblock %}
+</div>
+<div class="footer">
+{% block footer %}
+<p>Bricktop Combatives &#169; 2017</p>  
+{% endblock %} 
+</div>
+
+</body>
+</html>
