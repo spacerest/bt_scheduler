@@ -23,9 +23,9 @@ print BASE_DIR
 SECRET_KEY = 'zkwfg+=e49n^8*j3c&7l_elgb7*s0pm$oz=rfml(%ow((+i8lw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = [u'212.237.28.45',u'bricktopcombatives.com',u'www.bricktopcombatives.com']
 
 
 # Application definition
@@ -118,6 +118,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATIC_ROOT = '/usr/share/nginx/html/static/'
 
 STATIC_URL = '/static/'
 
