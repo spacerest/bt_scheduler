@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+</br></br></br></br></br></br></br>
+<form action="" method="get">
+    <input type="text" name="q">
+    <input type="submit" value="Search">
+</form>
+    {% if error %} 
+	<p style="color: red;">Please submit a search term.</p>
+    {% endif %}
+    <p>you searched for: <strong> {{query}} </strong></p>
+	
+    {% if books %}
+    <p>Found {{ books|length }} book{{ books|pluralize }}.</p>
+    <ul>
+	{% for book in books %}
+	<li>title: {{ book.title }}</br>publisher: {{ book.publisher }}</li>
+	{% endfor %}
+    </ul>
+    {% else %}
+	<p>No books matched your search criteria.</p>
+    {% endif %}
+
+{% endblock %}
+
+

@@ -1,6 +1,47 @@
 {% extends "base.html" %}
-
 {% block title %}Contact{% endblock %}
-{% block bodytype %}"back-body"{% endblock %} 
+{% block bodytype %}"back-body contact-page"{% endblock %} 
 {% block content %}
+<div id="col-1-2">
+  <div class="content-list">
+  <h2>Contact</h2>
+    <ul>
+      <li>bricktopcombatives@gmail</li>
+      <li>773.708.8823</li>
+      <li class="social-media"><a href="http://instagram.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/ig.png" /></a><a href="http://twitter.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/twitter.png" /></a><a href="http://facebook.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/fb.png" /></a></li>
+    </ul>
+  </div>
+</div>
+<div id="col-2-2">
+  <div id="contact-form">
+  {% if form.errors %}
+    <p style="color: red;">
+      Please correct the error{{ form.errors|pluralize}} below.
+    </p>
+  {% endif %}
+  <form action="" method="post">
+    <table>
+    <span class="field">
+      <tr><td></td><td>{{ form.subject.errors }}</td></tr>
+      <tr><td><label for="id_subject">Subject:</label></td>
+      <td>{{ form.subject }}</td></tr>
+    </span>
+    <span class="field">
+      <tr><td></td><td>{{ form.email.errors }}</td></tr>
+      <tr><td><label for="id_email">Email:</label></td>
+      <td>{{ form.email }}</td></tr>
+    </span>
+    <span class="field">
+      <tr><td></td><td>{{ form.message.errors }}</td></tr>
+      <tr><td><label for="id_message">Message:</label></td>
+      <td>{{ form.message }}</td></tr>
+    </span>
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Submit">
+  </form>
+  </div>
+</div>
+
+
 {% endblock %}
