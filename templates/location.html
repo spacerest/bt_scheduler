@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block bodytype %}"back-body schedule-page"{% endblock %}
+{% block content %}
+
+<div id="col-1-2">
+<div class="content-list">
+<div class="map-wrap">
+  <iframe src="{{ location.google_map_url }}" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<div id="cod-2-2">
+<div class="content-list">
+<h2>{{ location.location_name }}</h2>
+
+</div>
+
+</div>
+
+
+{% endblock %}

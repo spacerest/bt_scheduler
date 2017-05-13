@@ -24,13 +24,13 @@ $(function () {
 </script>
 {% endblock %}
 </head>
-<body class={% block bodytype %}{% endblock %}>
+<body {% block actiontype %}onload="document.getElementById('fade-blurb').style.opacity='1'"{% endblock %}class={% block bodytype %}{% endblock %}>
 <div class="logo-filter"></div>
-<div class="logo"><img class="fadein" style="opacity:1;"src='/static/assets/images/crown1.png'/></div>
+<div class="logo"><img src='/static/assets/images/crown1.png'/></div>
 <header>
   <div class={% block headerwrap1 %}"back-page"{% endblock %}> 
     <div class={% block headerwrap2 %}"header-wrap"{% endblock %}>
-      <div class="fadein title-nav" style="opacity: 1" >
+      <div class="title-nav" >
         <a href="/"><h1><span class="top-title">Bricktop</span></br>Combatives</h1></a>
       <nav>
 	<div class="menu"><span class="menu-icon">

@@ -23,7 +23,7 @@ print BASE_DIR
 SECRET_KEY = 'zkwfg+=e49n^8*j3c&7l_elgb7*s0pm$oz=rfml(%ow((+i8lw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True#False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = [u'212.237.28.45',u'bricktopcombatives.com',u'www.bricktopcombatives.com']
 

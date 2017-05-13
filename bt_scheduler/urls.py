@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from bt_scheduler.views import home, current_datetime, hours_ahead, contact, schedule, display_meta, thankyou
+from bt_scheduler.views import home, current_datetime, hours_ahead, contact, schedule, display_meta, thankyou, location, class_detail
 
 from books import views
 
@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^search-form/$', views.search_form),
     url(r'^search/$', views.search),
     url(r'^contact/thank-you/$', thankyou),
+    url(r'^schedule/location-(?P<abbrev>\w{0,20})/$', location),
+    url(r'^schedule/class-(?P<abbrev>\w{0,20})/$', class_detail)
 ]

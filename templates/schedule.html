@@ -3,17 +3,55 @@
 {% block title %}Schedule{% endblock %}
 {% block bodytype %}"back-body schedule-page"{% endblock %} 
 {% block content %}
-<div id="col-1-2">
-<form id="schedule" action="" method="post">
 
-<div class="content-list">
-<h2>Schedule</h2>
+<div id="col-1-2">
+<div class="content-list" id="fade-blurb" >
+{% if location %}
+<div class="blurb">
+<h3>{{ location.location_name }}</h3>
+<p>{{location.street_address }}</p>
+<p>{{location.city}}, {{location.state_province}} {{location.zipcode}}</p></br>
+<div class="map-wrap">
+  <iframe src="{{ location.google_map_url }}" width="90%" height="auto" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+</div>
+{% elif class_type %}
+<div class="blurb">
+<ul><h3>{{ class_type.name }}</h3>
+  <li>{{ class_type.description }}</li>
+</ul>
+</div>
+{% else %}
 <ul>
-  <li><a href="/contact">Contact</a> for private lesson or corporate event availability</li>
+  <blockquote cite="http://musashi-miyamoto.com/">“You can only fight the way you practice.”</blockquote>
+  <small class="author">- Miyamoto Musashi</small>
+{% endif %}
+</div>
+</div>
+<div id="col-2-2">
+<form id="schedule" action="" method="post">
+<div class="content-list">
+<h2>Public</h2>
+{% if events %}
+<ul class="events">
+{% for event in events %}
+  <li class="list-event">
+      <a href="/schedule/class-{{ event.class_type.abbreviation }}/"><span class="list-event-type">> {{ event.class_type.name }}</span></a></br>
+      <span class="list-event-date">{{ event.weekday }}, {{ event.date }}</br>{{ event.start_time }} - {{ event.end_time }}</span></br>
+      <span class="list-location"><a href="/schedule/location-{{ event.location.abbreviation }}">> {{ event.location.location_name }}</a></span>
+      </li>
+{% endfor %}
+</ul>
+{% else %}
+<ul>
+  <li class="non-list">No public classes scheduled for this week. Please <a href="/contact">contact</a> for future availability.</li>
+</ul>
+{% endif %}
+<h2>Private</h2>
+<ul>
+  <li class="non-list"><a href="/contact">Contact</a> for private lesson or corporate event availability</li>
 </ul>
 </div>
 </form>
 </div>
-<div id="col-2-2">.</div>
-
 {% endblock %}
