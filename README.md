@@ -7,6 +7,7 @@ todo:
 - filter for patient resources
 - js for patient resources navigation
 - meta data for search
+- fb link
 
 
 - about us
