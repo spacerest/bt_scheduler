@@ -1,8 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Schedule{% endblock %}
+{% block google-info %}
+<meta name="google-site-verification" content="tYZc-htCc0disqzPzUFwBiG6RV5vXNOLTcw3h-QaLIg" />
+<meta name="description" content="Bricktop Combatives offers classes to all ages in Chicago, IL. Sign up as an individual or with your friends and family. Corporate and private lessons available. Instruction ranges from kickboxing, kung fu, jujitsu, and other forms of self defense and martial arts." />
+{% endblock %}
+{% block title %}schedule{% endblock %}
+
 {% block bodytype %}"back-body schedule-page"{% endblock %} 
 {% block content %}
+
+{% if announcements %}
+        <div class="announcement">
+	    <ul>
+              {% for announcement in announcements %}
+		{% if announcement.started and not announcement.ended or announcement.show_outside_of_set_times %}
+                 <li>
+                   {% if announcement.show_start_end_times %}
+                     <span class="announcement-date">{{ announcement.start_time|date:"d F Y"}}{% if announcement.is_multiple_days %} - {{ announcement.end_time|date:"d F Y" }}{% endif %}: </span>
+		     {{ announcement.is_past_due }}
+                   {% endif %}
+                   {{ announcement.text }} {{ announcement.today }}
+                 </li>
+		 {% endif %}
+              {% endfor %}
+            </ul>
+        </div> 
+{% endif %}
 
 <div id="col-1-2">
 <div class="content-list" id="fade-blurb" >
@@ -23,8 +46,9 @@
 </div>
 {% else %}
 <ul>
-  <blockquote cite="http://musashi-miyamoto.com/">“You can only fight the way you practice.”</blockquote>
-  <small class="author">- Miyamoto Musashi</small>
+   <blockquote cite={{ quote.source }}>"{{ quote.text }}"</blockquote>
+   <small class="author">- {{ quote.author }}</small>
+
 {% endif %}
 </div>
 </div>
@@ -37,7 +61,7 @@
 {% for event in events %}
   <li class="list-event">
       <a href="/schedule/class-{{ event.class_type.abbreviation }}/"><span class="list-event-type">> {{ event.class_type.name }}</span></a></br>
-      <span class="list-event-date">{{ event.weekday }}, {{ event.date }}</br>{{ event.start_time }} - {{ event.end_time }}</span></br>
+      <span class="list-event-date">{{ event.original.meeting_time_description }}</span></br>
       <span class="list-location"><a href="/schedule/location-{{ event.location.abbreviation }}">> {{ event.location.location_name }}</a></span>
       </li>
 {% endfor %}

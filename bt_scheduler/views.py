@@ -1,11 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 import datetime
+import random
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from bt_scheduler.forms import ContactForm
 from django.db import models
-from events.models import Message, Event, Location, Class
+from events.models import Message, Event, Location, Class, Announcement, Quote, Document
 
 def current_datetime(request): 
     now = datetime.datetime.now()
@@ -25,18 +26,25 @@ def home(request):
     return render(request, 'index.html', {})
 
 def schedule(request):
+    announcement_list = Announcement.objects.all()
     prior_date = datetime.datetime.now() - datetime.timedelta(days=7)
     future_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    event_list = Event.objects.filter(start_time__gte=prior_date, start_time__lte=future_date)
+    quotes_list = Quote.objects.all()
+    if (len(quotes_list) > 0):
+        quote = random.choice(quotes_list)
+    else:
+        quote = ""
+    event_list = Event.objects.all().filter(show_this_event=True)
     event_hash_list = []
     for event in event_list:
 	event_hash_list.append(hash_event(event))
-    return render(request, 'schedule.html', {'events': event_hash_list})
+    return render(request, 'schedule.html', {'events': event_hash_list, 'announcements': announcement_list, 'quote':quote})
 
 def location(request, abbrev):
     prior_date = datetime.datetime.now() - datetime.timedelta(days=7)
     future_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    event_list = Event.objects.filter(start_time__gte=prior_date, end_time__lte=future_date)
+    event_list = Event.objects.all()
+    event_list = Event.objects.all().filter(show_this_event=True)
     event_hash_list = []
     for event in event_list:
 	event_hash_list.append(hash_event(event))
@@ -48,7 +56,8 @@ def location(request, abbrev):
 def class_detail(request, abbrev):
     prior_date = datetime.datetime.now() - datetime.timedelta(days=7)
     future_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    event_list = Event.objects.filter(start_time__gte=prior_date, end_time__lte=future_date)
+    event_list = Event.objects.all()
+    event_list = Event.objects.all().filter(show_this_event=True)
     event_hash_list = []
     for event in event_list:
 	event_hash_list.append(hash_event(event))
@@ -60,6 +69,8 @@ def thankyou(request):
     return render(request, 'thank-you.html', {})
 
 def contact(request):
+    announcement_list = Announcement.objects.all()
+    documents = Document.objects.all()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -75,8 +86,8 @@ def contact(request):
 	    
 	    return HttpResponseRedirect('/contact/thank-you/')
     else:
-	form = ContactForm(initial={'subject': 'Hi'})
-    return render(request, 'contact.html',{'form': form})
+	form = ContactForm(initial={'subject': ''})
+    return render(request, 'contact.html',{'announcements': announcement_list, 'form': form, 'documents': documents})
 
 def display_meta(request):
     values = request.META.items()
@@ -87,6 +98,4 @@ def display_meta(request):
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
 def hash_event(event):
-    weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    months = ['January','February','March','April','May','June','July','August','September','October','November','December']
-    return {'start_time': event.start_time.time ,'end_time': event.end_time.time, 'date': event.start_time.date, 'weekday': weekdays[event.start_time.weekday()], 'month': months[event.start_time.month], 'location': event.location, 'original': event, 'class_type': event.class_type}
+    return {'location': event.location, 'original': event, 'class_type': event.class_type}

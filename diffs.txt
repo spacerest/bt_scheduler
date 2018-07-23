@@ -1,0 +1,14 @@
+diff -r ./bt_scheduler/views.py /Users/sadieparker/devstuff/backups/aruba_server_3/var/www/html/bt_scheduler/./bt_scheduler/views.py
+51c53
+<     event_list = Event.objects.filter(start_time__gte=prior_date, end_time__lte=future_date)
+---
+>     event_list = Event.objects.all()
+
+diff -r ./templates/contact.html /Users/sadieparker/devstuff/backups/aruba_server_3/var/www/html/bt_scheduler/./templates/contact.html
+1a2,6
+> {% block google-info %}
+> <meta name="google-site-verification" content="tYZc-htCc0disqzPzUFwBiG6RV5vXNOLTcw3h-QaLIg" />
+> <meta name="description" content="Connect with Bricktop Combatives on Facebook and Instagram for updates regarding kickboxing, kung fu, jujitsu, and other forms of self defense. All ages are welcome." />
+> {% endblock %}
+>  
+

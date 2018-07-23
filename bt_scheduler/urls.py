@@ -3,6 +3,8 @@ from django.contrib import admin
 from bt_scheduler.views import home, current_datetime, hours_ahead, contact, schedule, display_meta, thankyou, location, class_detail
 
 from books import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^here/', admin.site.urls),
@@ -17,4 +19,4 @@ urlpatterns = [
     url(r'^contact/thank-you/$', thankyou),
     url(r'^schedule/location-(?P<abbrev>\w{0,20})/$', location),
     url(r'^schedule/class-(?P<abbrev>\w{0,20})/$', class_detail)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

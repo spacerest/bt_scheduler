@@ -1,19 +1,41 @@
 {% extends "base.html" %}
-{% block title %}Contact{% endblock %}
+{% block title %}Contact & Forms{% endblock %}
 {% block bodytype %}"back-body contact-page"{% endblock %} 
 {% block content %}
+
+{% if announcements %}
+        <div class="announcement">
+	    <ul>
+              {% for announcement in announcements %}
+		{% if announcement.started and not announcement.ended or announcement.show_outside_of_set_times %}
+                 <li>
+                   {% if announcement.show_start_end_times %}
+                     <span class="announcement-date">{{ announcement.start_time|date:"d F Y"}}{% if announcement.is_multiple_days %} - {{ announcement.end_time|date:"d F Y" }}{% endif %}: </span>
+		     {{ announcement.is_past_due }}
+                   {% endif %}
+                   {{ announcement.text }} {{ announcement.today }}
+                 </li>
+		 {% endif %}
+              {% endfor %}
+            </ul>
+        </div> 
+{% endif %}
+
+
+
+
+
 <div id="col-1-2">
   <div class="content-list">
   <h2>Contact</h2>
     <ul>
+      <li class="social-media"><a href="http://instagram.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/ig.png" /></a><a href="http://facebook.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/fb.png" /></a></li>
+
       <li>bricktopcombatives@gmail</li>
       <li>773.708.8823</li>
-      <li class="social-media"><a href="http://instagram.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/ig.png" /></a><a href="http://twitter.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/twitter.png" /></a><a href="http://facebook.com/bricktopcombatives" target="_blank"><img src="/static/assets/images/fb.png" /></a></li>
     </ul>
-  </div>
-</div>
-<div id="col-2-2">
-  <div id="contact-form">
+
+<div id="contact-form">
   {% if form.errors %}
     <p style="color: red;">
       Please correct the error{{ form.errors|pluralize}} below.
@@ -38,8 +60,28 @@
     </span>
     </table>
     {% csrf_token %}
-    <input type="submit" value="Submit">
+    <button type="submit" value="Submit">Send Message</button>
   </form>
+  </div>
+
+
+  </div>
+</div>
+<div id="col-2-2">
+  <div class="content-list">
+    <h2>Forms</h2>
+    <ul>
+    {% for document in documents %}
+        <li class="document-download">
+	<span class="doc-icon"><img src="/static/assets/images/document.svg" /></span>
+        <span class="doc-title"><h4>{{ document.title }}</h4></span> 
+	    <p>{{ document.description }}</p>
+	    <a style="text-decoration: none;" class="expand-options-save save-button" href="{{ MEDIA_URL }}{{ document.file.name }}" download="{{ document.file.name }}">
+                <span id="expand"><span class="icon side">&#9658;</span><span class="icon down">&#9660;</span>Save to device</span>
+            </a>
+	</li>
+    {% endfor %}
+    </ul>
   </div>
 </div>
 

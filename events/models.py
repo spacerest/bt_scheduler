@@ -5,6 +5,13 @@ from django.db import models
 from datetime import date, datetime
 import calendar
 
+class Document(models.Model):
+    title = models.CharField(max_length=1000)
+    description = models.TextField(max_length=3000, null=True, blank=True)
+    file = models.FileField(upload_to="", blank=True, null=True)
+    def __str__(self):
+        return self.title
+
 class Class(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(max_length=3000, null=True, blank=True)
@@ -34,14 +41,13 @@ class Location(models.Model):
 	#return self.location_name
  
 class Event(models.Model):
-    class_type = models.ForeignKey(Class, models.SET_NULL, null=True, blank=True)
-    start_time = models.DateTimeField("Start Time")
-    end_time = models.DateTimeField("Sale End Time")
-    instructors = models.ManyToManyField(Instructor)
-    class_size = models.PositiveSmallIntegerField(default=12)
+    meeting_time_description = models.TextField(max_length=10000, null=True, blank=True)
+    show_this_event = models.BooleanField(default=True)
     location = models.ForeignKey(Location, models.SET_NULL, null=True, blank=True)
+    class_type = models.ForeignKey(Class, models.SET_NULL, null=True, blank=True)
+    instructors = models.ManyToManyField(Instructor)
     def __str__(self):
-	return "{}, {}, {}".format(self.class_type, self.location, self.start_time)
+	return "{}, {}".format(self.class_type, self.location )
 
 class Student(models.Model):
     first_name = models.CharField(max_length=30, default="Add last name")
@@ -49,9 +55,37 @@ class Student(models.Model):
     birthday = models.DateField("Birthday",default=datetime.now)
     def __str__(self):
         return first_name + " " + last_name
-    
+ 
+class Announcement(models.Model):
+    text = models.CharField(max_length=100, default="insert announcement here")
+    start_time = models.DateField("Start Day")
+    end_time = models.DateField("End Day")
+    show_start_end_times = models.BooleanField(default=True)
+    show_outside_of_set_times = models.BooleanField(default=False)
+    def __str__(self):
+        return self.text   
+    @property
+    def started(self):
+        return date.today() >= self.start_time
+    @property
+    def ended(self):
+        return date.today() > self.end_time
+    @property
+    def today(self):
+        return date.today()
+    def is_multiple_days(self):
+        if (self.start_time == self.end_time):
+            return False 
+        else:
+            return True 
 
-       
+class Quote(models.Model):
+    text = models.TextField(max_length=1000000)
+    author = models.CharField(max_length=1000)
+    source = models.URLField(max_length=10000, blank=True, null=True)
+    def __str__(self):
+        return self.text
+
 
 #class Student(models.Model):
 #

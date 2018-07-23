@@ -2,6 +2,10 @@
 
 <html lang = "en">
 <head>
+{% block google-info %}
+<meta name="google-site-verification" content="tYZc-htCc0disqzPzUFwBiG6RV5vXNOLTcw3h-QaLIg" />
+<meta name="description" content="Bricktop Combatives is a martial arts institution in Chicago, IL. Areas of instruction include kickboxing, kung fu, jujitsu, and other forms of self defense. All ages are welcome. Effective workouts and community building are a high priority." />
+{% endblock %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,6 +56,8 @@ $(function () {
 </header>
 <div class="main-border">
   <div class="content">
+
+    
     {% block content %}{% endblock %}
   </div>
 </div>
